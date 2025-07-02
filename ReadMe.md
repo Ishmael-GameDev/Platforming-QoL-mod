@@ -5,7 +5,7 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 ## 🔧 Features
 
 - **Freeze on Damage**: Freezes the game briefly after taking damage (configurable duration).
-- **Slowdown / Speedup**: Slows down or speeds up time for a short period after freeze (configurable multiplier).
+- **Speedup**: Speeds up time for a respawn period after freeze (configurable multiplier).
 - **Hitbox Viewer**: Toggle hitbox display for the Knight, enemies, terrain, and other entities.
 - **In-game UI Configuration**: All settings adjustable from the pause menu.
 

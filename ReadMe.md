@@ -1,4 +1,4 @@
-"# Platforming QoL Mod
+# Platforming QoL Mod
 
 A Hollow Knight mod focused on improving precision platforming with optional time control and hitbox visualization tools.
 
@@ -30,4 +30,4 @@ This repository contains full source code and the latest compiled `.dll` in the 
 ## 📃 License
 
 MIT — free to use, modify, and distribute.
-" 
+

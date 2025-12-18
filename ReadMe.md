@@ -4,10 +4,15 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 
 ## 🔧 Features
 
-- **Freeze on Damage**: Freezes the game briefly after taking damage (configurable duration).
-- **Speedup**: Speeds up time for a respawn period after freeze (configurable multiplier).
-- **Hitbox Viewer**: Toggle hitbox display for the Knight, enemies, terrain, and other entities.
-- **In-game UI Configuration**: All settings adjustable from the pause menu.
+- **Freeze on Damage**: Briefly freezes time after taking damage.
+  - Can be configured to trigger on **hazard objects only** or **any hits** (`Freeze Mode` setting).
+  - Configurable freeze duration (`Freeze Duration` setting, 0–2 seconds).
+- **Speedup After Freeze**: Speeds up time for a short period after freeze.
+  - Configurable multiplier (`Speed Multiplier` setting, 1x–5x).
+  - Skip time duration depends on **Skip Type** (`Respawn` = 1.8s, `Death` = 5s).
+  - Hazard respawns can optionally reduce skip time by 1 second (if `hazardRespawn` is enabled).
+- **Hitbox Viewer**: Toggle display of all active hitboxes (`Show Hitboxes` setting).
+- **Coroutine-Safe Logic**: Ensures only one time effect runs at a time.
 
 ## 📥 Installation
 
@@ -17,9 +22,10 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 
 ## 🛠 Settings
 
-| Setting                  | Description                                 | Range         |
-|--------------------------|---------------------------------------------|---------------|
-| Freeze Duration          | Time (in seconds) to freeze after damage    | 0.0 – 1.0     |
-| Speed Multiplier         | Timescale applied after freeze              | 1.0 – 5.0     |
-| Enable Hitbox Viewer     | Show/hide all active hitboxes               | On / Off      |
-=======
+| Setting                  | Description                                           | Range / Options                |
+|---------------------------|-------------------------------------------------------|--------------------------------|
+| Freeze Duration           | Time (in seconds) to freeze after taking damage      | 0.0 – 2.0                      |
+| Speed Multiplier          | Timescale applied after freeze                        | 1.0 – 5.0                      |
+| Show Hitboxes             | Display hitboxes during slowmo                        | On / Off                        |
+| Freeze Mode               | Determines which hits trigger the freeze             | "Hazard objects only" / "Any hits" |
+| Skip Type                 | Duration skip after freeze                             | "Respawn" (1.8s) / "Death" (5s) |

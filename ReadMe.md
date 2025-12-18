@@ -10,7 +10,6 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 - **Speedup After Freeze**: Speeds up time for a short period after freeze.
   - Configurable multiplier (`Speed Multiplier` setting, 1x–5x).
   - Skip time duration depends on **Skip Type** (`Respawn` = 1.8s, `Death` = 5s).
-  - Hazard respawns can optionally reduce skip time by 1 second (if `hazardRespawn` is enabled).
 - **Hitbox Viewer**: Toggle display of all active hitboxes (`Show Hitboxes` setting).
 - **Coroutine-Safe Logic**: Ensures only one time effect runs at a time.
 

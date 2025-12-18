@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Platforming QoL Mod
 
 A Hollow Knight mod focused on improving precision platforming with optional time control and hitbox visualization tools.
@@ -22,3 +23,5 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 | Freeze Duration          | Time (in seconds) to freeze after damage    | 0.0 – 1.0     |
 | Speed Multiplier         | Timescale applied after freeze              | 1.0 – 5.0     |
 | Enable Hitbox Viewer     | Show/hide all active hitboxes               | On / Off      |
+=======
+>>>>>>> 9010af8 (Release v1.1.0: platforming QoL improvements)

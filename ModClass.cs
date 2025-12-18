@@ -4,12 +4,25 @@ using Modding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
+using static Hollow_Knight_Platforming_Mod.Hollow_Knight_Platforming_Mod;
 
 namespace Hollow_Knight_Platforming_Mod
 {
-    public class Hollow_Knight_Platforming_Mod : Mod, IMenuMod
+    [System.Serializable]
+    public class PlatformingSettings
+    {
+        public float FreezeDuration = 0.5f;
+        public float SpeedMultiplier = 3f;
+        public bool ShowHitboxes = true;
+        public bool FreezeMode = true;
+        public bool HazardRespawn = false;
+        public int SkipIndex = 0;
+        public float SkipTime = 1.8f;
+    }
+    public class Hollow_Knight_Platforming_Mod : Mod, IMenuMod, IGlobalSettings<PlatformingSettings>
     {
         private bool forceFreezeActive = false;
         private float originalGenericTimeScale = 1f;
@@ -20,6 +33,37 @@ namespace Hollow_Knight_Platforming_Mod
         public static bool hazardRespawn = false;
         private float skipTime=1.8f;
         private int skipIndex = 0;
+        public PlatformingSettings GS = new();
+
+        // Загружаем настройки и переписываем переменные мода
+        public void OnLoadGlobal(PlatformingSettings gs)
+        {
+            if (gs == null) return;
+
+            GS = gs;
+
+            showHitboxes = GS.ShowHitboxes;
+            freezeMode = GS.FreezeMode;
+            hazardRespawn = GS.HazardRespawn;
+            freezeDuration = GS.FreezeDuration;
+            speedMultiplier = GS.SpeedMultiplier;
+            skipIndex = GS.SkipIndex;
+            skipTime = GS.SkipTime;
+        }
+
+        // Сохраняем текущее состояние переменных мода в объект настроек
+        public PlatformingSettings OnSaveGlobal()
+        {
+            GS.ShowHitboxes = showHitboxes;
+            GS.FreezeMode = freezeMode;
+            GS.HazardRespawn = hazardRespawn;
+            GS.FreezeDuration = freezeDuration;
+            GS.SpeedMultiplier = speedMultiplier;
+            GS.SkipIndex = skipIndex;
+            GS.SkipTime = skipTime;
+
+            return GS;
+        }
         private Collider2D heroCollider;
         private Collider2D heroBox;
         public void OnDisable()
@@ -28,6 +72,7 @@ namespace Hollow_Knight_Platforming_Mod
 
             TimeController.GenericTimeScale = 1f;
         }
+
         private void GameManager_SetTimeScale(
             On.GameManager.orig_SetTimeScale_float orig,
             GameManager self,

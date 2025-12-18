@@ -12,6 +12,7 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
   - Skip time duration depends on **Skip Type** (`Respawn` = 1.8s, `Death` = 5s).
 - **Hitbox Viewer**: Toggle display of all active hitboxes (`Show Hitboxes` setting).
 - **Coroutine-Safe Logic**: Ensures only one time effect runs at a time.
+- - **Global Settings Save/Load**: Automatically saves your mod settings to a JSON file and restores them on game start.
 
 ## 📥 Installation
 

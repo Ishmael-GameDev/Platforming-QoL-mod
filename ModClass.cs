@@ -312,7 +312,7 @@ namespace Hollow_Knight_Platforming_Mod
 
         private int OnAfterTakeDamage(int hazardType, int damageAmount)
         {
-            if (freezeMode || speedMultiplier == 1f)
+            if (freezeMode)
                 return damageAmount;
             if (damageAmount <= 0)
                 return damageAmount;
@@ -361,7 +361,7 @@ namespace Hollow_Knight_Platforming_Mod
         }
         private int OnTakeDamageHook(ref int hazardType, int damage)
         {
-            if (!freezeMode || speedMultiplier == 1f)
+            if (!freezeMode)
                 return damage;
 
             if (damage <= 0)

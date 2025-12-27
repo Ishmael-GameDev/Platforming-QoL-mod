@@ -13,7 +13,7 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 - **Hitbox Viewer**: Toggle display of all active hitboxes (`Show Hitboxes` setting).
 - **Coroutine-Safe Logic**: Ensures only one time effect runs at a time.
 - **Global Settings Save/Load**: Automatically saves your mod settings to a JSON file and restores them on game start.
-
+- **Camera Rotation Mode**: Adds automatic camera rotation support for playing *Suffering upon the Silver*.
 ## 📥 Installation
 
 1. Install Modding API if not already installed.
@@ -29,3 +29,4 @@ A Hollow Knight mod focused on improving precision platforming with optional tim
 | Show Hitboxes             | Display hitboxes during slowmo                        | On / Off                        |
 | Freeze Mode               | Determines which hits trigger the freeze             | "Hazard objects only" / "Any hits" |
 | Skip Type                 | Duration skip after freeze                             | "Respawn" (1.8s) / "Death" (5s) |
+| Rotate Angle              | Camera rotation angle applied periodically            | 0.0 - 270.0                       |

@@ -21,6 +21,7 @@ namespace Hollow_Knight_Platforming_Mod
         public bool HazardRespawn = false;
         public int SkipIndex = 0;
         public float SkipTime = 1.8f;
+        public float RotateAngle = 0f;
     }
     public class Hollow_Knight_Platforming_Mod : Mod, IMenuMod, IGlobalSettings<PlatformingSettings>
     {
@@ -33,8 +34,14 @@ namespace Hollow_Knight_Platforming_Mod
         public static bool hazardRespawn = false;
         private float skipTime=1.8f;
         private int skipIndex = 0;
+        private float rotateAngle = 0f;
+        private float appliedAngle = 0f;
+        private Transform camTransform;
+        private float currentAngle = 0f;
+        private bool cameraReady = false;
         public PlatformingSettings GS = new();
-
+        private float timer = 0f;
+        private float interval = 1f; // 1 секунда
         // Загружаем настройки и переписываем переменные мода
         public void OnLoadGlobal(PlatformingSettings gs)
         {
@@ -49,6 +56,7 @@ namespace Hollow_Knight_Platforming_Mod
             speedMultiplier = GS.SpeedMultiplier;
             skipIndex = GS.SkipIndex;
             skipTime = GS.SkipTime;
+            rotateAngle = GS.RotateAngle;
         }
 
         // Сохраняем текущее состояние переменных мода в объект настроек
@@ -61,6 +69,7 @@ namespace Hollow_Knight_Platforming_Mod
             GS.SpeedMultiplier = speedMultiplier;
             GS.SkipIndex = skipIndex;
             GS.SkipTime = skipTime;
+            GS.RotateAngle = rotateAngle;
 
             return GS;
         }
@@ -151,16 +160,52 @@ namespace Hollow_Knight_Platforming_Mod
             On.GameManager.SetTimeScale_float += GameManager_SetTimeScale;
             ModHooks.AfterTakeDamageHook += OnAfterTakeDamage;
             ModHooks.TakeDamageHook += OnTakeDamageHook;
+            On.GameManager.Update += GameManager_Update;
             hitboxViewer = new HitboxViewer();
             // hitboxViewer.Load();
             // hitboxViewer.Unload();
             Log("Platforming mod initialized.");
         }
+        private void GameManager_Update(On.GameManager.orig_Update orig, GameManager self)
+        {
+            orig(self);
 
+            // Инициализация камеры один раз
+            if (camTransform == null && Camera.main != null)
+            {
+                camTransform = Camera.main.transform;
+            }
+
+            if (camTransform != null)
+            {
+                timer += Time.unscaledDeltaTime; // игнорируем timescale
+
+                if (timer >= interval)
+                {
+                    timer = 0f;
+
+                    // Применяем угол из настроек
+                    if (!Mathf.Approximately(appliedAngle, rotateAngle))
+                    {
+                        camTransform.localRotation = Quaternion.Euler(0f, 0f, rotateAngle);
+                        appliedAngle = rotateAngle;
+                    }
+                }
+            }
+        }
+
+        private void ApplyCameraRotation()
+        {
+            if (camTransform == null)
+                return;
+
+            camTransform.localRotation = Quaternion.Euler(0f, 0f, currentAngle);
+        }
         public List<IMenuMod.MenuEntry> GetMenuData(IMenuMod.MenuEntry? toggleButtonEntry)
         {
             string[] freezeOptions = CreateOptions(0f, 2f, 0.1f);
             string[] speedOptions = CreateOptions(1f, 5f, 0.5f);
+            string[] rotateOptions = CreateOptions(0f, 270f, 90f);
 
             return new List<IMenuMod.MenuEntry>
             {
@@ -217,6 +262,15 @@ namespace Hollow_Knight_Platforming_Mod
                     Loader = () => freezeMode ? 0 : 1 
                 },
 
+                new IMenuMod.MenuEntry
+                {
+                    Name = "Camera Rotation",
+                    Description = "Degree Angle",
+                    Values = rotateOptions,
+                    Saver = opt => rotateAngle = float.Parse(rotateOptions[opt]),
+                    Loader = () => FindClosestIndex(rotateOptions, rotateAngle)
+                }
+
                 /*new IMenuMod.MenuEntry
                 {
                     Name = "Hazard Respawn",
@@ -258,7 +312,7 @@ namespace Hollow_Knight_Platforming_Mod
 
         private int OnAfterTakeDamage(int hazardType, int damageAmount)
         {
-            if (freezeMode)
+            if (freezeMode || speedMultiplier == 1f)
                 return damageAmount;
             if (damageAmount <= 0)
                 return damageAmount;
@@ -307,7 +361,7 @@ namespace Hollow_Knight_Platforming_Mod
         }
         private int OnTakeDamageHook(ref int hazardType, int damage)
         {
-            if (!freezeMode)
+            if (!freezeMode || speedMultiplier == 1f)
                 return damage;
 
             if (damage <= 0)

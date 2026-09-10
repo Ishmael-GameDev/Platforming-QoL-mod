@@ -1,22 +1,21 @@
-﻿using Modding;
+using Modding;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace Hollow_Knight_Platforming_Mod.Hitbox
+namespace PlatformingQoL.Hitbox
 {
     public class HitboxViewer
     {
         public static int State { get; private set; }
         private HitboxRender hitboxRender;
 
-        public void Load()
+        public void Load(int level)
         {
-            State = Hollow_Knight_Platforming_Mod.showHitboxes ? 1 : 0; ;
             Unload();
+
+            State = level;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += CreateHitboxRender;
-
-
             ModHooks.ColliderCreateHook += UpdateHitboxRender;
 
             CreateHitboxRender();
@@ -24,7 +23,7 @@ namespace Hollow_Knight_Platforming_Mod.Hitbox
 
         public void Unload()
         {
-            State = Hollow_Knight_Platforming_Mod.showHitboxes ? 1 : 0; ;
+            State = 0;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= CreateHitboxRender;
 
             ModHooks.ColliderCreateHook -= UpdateHitboxRender;
@@ -58,5 +57,6 @@ namespace Hollow_Knight_Platforming_Mod.Hitbox
                 hitboxRender.UpdateHitbox(go);
             }
         }
+
     }
 }

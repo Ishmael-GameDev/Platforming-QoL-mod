@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Change this to the path of your modded HK installation -->
     <HollowKnightRefs>C:\Games\Hollow Knight\Hollow Knight\Hollow Knight_Data\Managed</HollowKnightRefs>
@@ -8,11 +8,11 @@
     <!--<DocumentationFile>$(OutputPath)/$(AssemblyTitle).xml</DocumentationFile>-->
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Hollow_Knight_Platforming_Mod</RootNamespace>
-    <AssemblyName>Hollow_Knight_Platforming_Mod</AssemblyName>
+    <RootNamespace>PlatformingQoL</RootNamespace>
+    <AssemblyName>PlatformingQoL</AssemblyName>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyTitle>Hollow_Knight_Platforming_Mod</AssemblyTitle>
-    <Product>Hollow_Knight_Platforming_Mod</Product>
+    <AssemblyTitle>PlatformingQoL</AssemblyTitle>
+    <Product>PlatformingQoL</Product>
     <Description>A Hollow Knight Mod</Description>
     <Copyright>Copyright ©  2025</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -58,6 +58,10 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>$(HollowKnightRefs)/Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
+	<Reference Include="Satchel">
+		<HintPath>C:\Games\Hollow Knight\Hollow Knight\Hollow Knight_Data\Managed\Mods\Satchel\Satchel.dll</HintPath>
+		<Private>false</Private>
+	</Reference>
     <Reference Include="GalaxyCSharp">
       <HintPath>$(HollowKnightRefs)/GalaxyCSharp.dll</HintPath>
     </Reference>

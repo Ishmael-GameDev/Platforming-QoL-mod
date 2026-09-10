@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Modding.Menu;
 using Satchel.BetterMenus;
@@ -11,7 +11,7 @@ namespace PlatformingQoL
 
         public static MenuScreen GetMenuScreen(MenuScreen modListMenu)
         {
-            string[] freezeOptions = CreateOptions(0f, 2f, 0.1f);
+            string[] freezeOptions = CreateOptions(0f, 1f, 0.1f);
             string[] speedOptions = CreateOptions(1f, 5f, 0.5f);
             string[] rotateOptions = CreateOptions(0f, 270f, 90f);
 

@@ -61,7 +61,7 @@ namespace PlatformingQoL
                     loadSetting: () => FindClosestIndex(freezeOptions, PlatformingQoL.freezeDuration)),
 
                 new HorizontalOption(
-                    name: "Skip Type",
+                    name: "Skip Time Amount",
                     description: "Depends on the purpose",
                     values: new[] { "Respawn", "Death" },
                     applySetting: index =>
@@ -84,13 +84,6 @@ namespace PlatformingQoL
                     values: new[] { "Off", "Main Layers", "All" },
                     applySetting: index => PlatformingQoL.hitboxDisplayMode = index,
                     loadSetting: () => PlatformingQoL.hitboxDisplayMode),
-
-                new HorizontalOption(
-                    name: "Freeze Mode",
-                    description: "Launch trigger",
-                    values: new[] { "Hazard objects only", "Any hits" },
-                    applySetting: index => PlatformingQoL.freezeMode = index == 0,
-                    loadSetting: () => PlatformingQoL.freezeMode ? 0 : 1),
 
                 new TextPanel("Camera Settings"),
 

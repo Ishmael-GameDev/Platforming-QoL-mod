@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using InControl;
 using Modding.Converters;
 using Newtonsoft.Json;
@@ -28,7 +28,6 @@ namespace PlatformingQoL
         public float HitboxSmoothingStrength = 15f;
         public int HitboxDisplayMode = 1;
 
-        public bool FreezeMode = true;
         public bool HazardRespawn = false;
         public int SkipIndex = 0;
         public float SkipTime = 1.8f;

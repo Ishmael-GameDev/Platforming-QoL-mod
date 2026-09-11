@@ -1,4 +1,4 @@
-﻿using GlobalEnums;
+using GlobalEnums;
 using PlatformingQoL.Hitbox;
 using Modding;
 using Modding.Menu;
@@ -27,7 +27,6 @@ namespace PlatformingQoL
 
         public static int permanentHitboxLevel = 0;
 
-        public static bool freezeMode = true;
         public static bool hazardRespawn = false;
         public static float skipTime = 1.8f;
         public static int skipIndex = 0;
@@ -52,7 +51,6 @@ namespace PlatformingQoL
             skipperEnabled = GS.SkipperEnabled;
             debugModTimescaleFix = GS.DebugModTimescaleFix;
             hitboxDisplayMode = GS.HitboxDisplayMode;
-            freezeMode = GS.FreezeMode;
             hazardRespawn = GS.HazardRespawn;
             freezeDuration = GS.FreezeDuration;
             speedMultiplier = GS.SpeedMultiplier;
@@ -69,7 +67,6 @@ namespace PlatformingQoL
             GS.SkipperEnabled = skipperEnabled;
             GS.DebugModTimescaleFix = debugModTimescaleFix;
             GS.HitboxDisplayMode = hitboxDisplayMode;
-            GS.FreezeMode = freezeMode;
             GS.HazardRespawn = hazardRespawn;
             GS.FreezeDuration = freezeDuration;
             GS.SpeedMultiplier = speedMultiplier;
@@ -181,7 +178,7 @@ namespace PlatformingQoL
         {
             On.GameManager.SetTimeScale_float += GameManager_SetTimeScale;
             ModHooks.AfterTakeDamageHook += OnAfterTakeDamage;
-            ModHooks.TakeDamageHook += OnTakeDamageHook;
+            //ModHooks.TakeDamageHook += OnTakeDamageHook;
             On.GameManager.Update += GameManager_Update;
             hitboxViewer = new HitboxViewer();
             Log("Platforming mod initialized.");
@@ -261,12 +258,16 @@ namespace PlatformingQoL
         private int OnAfterTakeDamage(int hazardType, int damageAmount)
         {
             if (!modEnabled || !skipperEnabled) return damageAmount;
-            if (freezeMode) return damageAmount;
+
+            // 1. Проверка на реальный хит (урон больше 0)
             if (damageAmount <= 0) return damageAmount;
+
+            // 2. Проверка на хазард-объект (перенесено из удаленного хука)
+            if (hazardType <= (int)GlobalEnums.HazardType.SPIKES) return damageAmount;
 
             if (!isCoroutineRunning && HeroController.instance != null)
             {
-                HeroController.instance.StartCoroutine(AnyHitsTimeEffectRoutine());
+                HeroController.instance.StartCoroutine(HazardTimeEffectRoutine());
             }
             return damageAmount;
         }
@@ -322,7 +323,7 @@ namespace PlatformingQoL
             isCoroutineRunning = false;
         }
 
-        private int OnTakeDamageHook(ref int hazardType, int damage)
+        /*private int OnTakeDamageHook(ref int hazardType, int damage)
         {
             if (!modEnabled || !skipperEnabled) return damage;
             if (!freezeMode) return damage;
@@ -337,7 +338,7 @@ namespace PlatformingQoL
                 HeroController.instance.StartCoroutine(HazardTimeEffectRoutine());
             }
             return damage;
-        }
+        }*/
 
         private IEnumerator HazardTimeEffectRoutine()
         {
